@@ -1,0 +1,38 @@
+{
+  "author": "Gaston Pereyra",
+  "name": "climaql-server",
+  "version": "0.4.1",
+  "description": "Server para una app para mostrar el clima en Argentina",
+  "main": "server.js",
+  "scripts": {
+    "start": "nodemon ./server.js --exec babel-node -e js"
+  },
+  "dependencies": {
+    "express": "^4.16.4",
+    "graphql": "^14.1.1",
+    "graphql-import": "^0.7.1",
+    "apollo-server-express": "^2.3.1",
+    "nodemon": "^1.18.9",
+    "node-fetch": "^2.3.0"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-preset-env": "^1.7.0",
+    "babel-preset-stage-0": "^6.24.1"
+  },
+  "engines": {
+    "node": "8.x"
+  },
+  "repository": {
+    "url": "https://github.com/gastonpereyra/climaQL-server"
+  },
+  "license": "MIT",
+  "keywords": [
+    "node",
+    "glitch",
+    "express",
+    "graphQL",
+    "apollo",
+    "weather"
+  ]
+}

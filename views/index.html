@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <title>ClimaQL-Server</title>
+    <meta name="description" content="Server GrahpQL de una app para el Clima">
+    <link id="favicon" rel="icon" href="https://glitch.com/edit/favicon-app.ico" type="image/x-icon">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Scripts y CSS -->
+    <link rel="stylesheet" href="/style.css">
+    <script src="/client.js" defer></script> 
+    <!-- Uso Bulma y FontAwesome para Maqueteado -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.2/css/bulma.min.css">
+    <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
+  </head>
+  <body>
+    <main class="hero is-bold is-fullheight" id="main">
+      <!-- Barra Superior-->
+      <div class="hero-head">
+        <nav class="navbar">
+          <div class="container">
+            <!-- Logo de la Aplicación -->
+            <div class="navbar-brand">
+              <a class="navbar-item">
+                <img src="http://res.publicdomainfiles.com/pdf_view/60/13534623619606.png" alt="Logo" title="Solo clima de Argentina">
+                <strong> ClimaQL</strong>
+              </a>
+              <!-- Para usar el menu Desplegable para Moviles -->
+              <span class="navbar-burger burger" data-target="navbarClima">
+                <span></span>
+                <span></span>
+                <span></span>
+              </span>
+            </div>
+            <!-- Botones del Menu -->
+            <div id="navbarClima" class="navbar-menu">
+              <div class="navbar-end">
+                <!-- Para resetear la Busqueda del Clima -->
+                <span class="navbar-item">
+                  <a class="button is-primary is-inverted" title="Reset" onclick="getLocation()" >
+                    <span class="icon">
+                      <i class="fas fa-sync fa-spin"></i>
+                    </span>
+                  </a>
+                </span>
+                <!-- Para ir al Playground -->
+                <span class="navbar-item">
+                  <a class="button is-primary is-inverted" href="/graphql">
+                    <span class="icon">
+                      <i class="fab fa-terminal"></i>
+                    </span>
+                    <span>Playground</span>
+                  </a>
+                </span>
+              </div>
+            </div>
+          </div>
+        </nav>
+      </div>
+      <!-- Contenido Principal -->
+      <div class="hero-body">
+        <div class="container">
+          <!-- Sin Cargar: Titulo de la App / Cargó: Nombre de la Estación -->
+          <h1 id="city" class="title is-1">
+            ClimaQL
+          </h1>
+          <!-- Sin Carga Subtitulo / Cargó: Provincia-->
+          <h2 id="province" class="subtitle is-2">
+            El clima de tu ciudad, Ahora.
+          </h2>
+          <div class="content">
+            <article class="media">
+              <!--Sin cargar: Logo de la App / Cargó: Imagen del clima -->
+              <figure class="media-left">
+                <p class="image is-128x128">
+                  <img id="climaIcon" src="http://res.publicdomainfiles.com/pdf_view/60/13534623619606.png">
+                </p>
+              </figure>
+              <div class="media-content">
+                <!-- Datos del CLima -->
+                <div class="content">
+                  <div class="field is-grouped is-grouped-multiline">
+                    <!-- Temperatura -->
+                    <div class="control">
+                      <div class="tags has-addons">
+                        <span class="tag is-dark is-large">Temperatura</span>
+                        <span class="tag is-large" id="temp"><a class="button is-light is-loading"></a></span>
+                      </div>
+                    </div>
+                    <!-- Sensación Termica -->
+                    <div class="control">
+                      <div class="tags has-addons">
+                        <span class="tag is-dark is-large">Sensación Termica</span>
+                        <span class="tag is-large" id="st"><a class="button is-light is-loading"></a></span>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- Descripción del Clima -->
+                  <span class="tag is-large" id="desc"><a class="button is-light is-loading"></a></span>
+                </div>
+              </div>
+            </article>
+          </div>
+        </div>
+      </div>
+      <!-- Pie de Pagina -->
+      <div class="hero-foot">
+        <div class="content">
+          <!-- Creditos y links -->
+          <div class="buttons is-centered">
+            
+            <a class="button is-dark is-outlined" href="https://github.com/gastonpereyra" title="Autor">
+              <span class="icon">
+                <i class="fab fa-github"></i>
+              </span>
+              <span>Gaston Pereyra</span>
+            </a>
+
+            <a class="button is-warning is-outlined" href="https://glitch.com" title="Hecho con">
+              <span class="icon">
+                <i class="fas fa-fish"></i>
+              </span>
+              <span>Glitch</span>
+            </a>
+
+            <a class="button is-primary is-outlined" href="https://bulma.io/" title="Hecho con">
+              <span class="icon">
+                <i class="fab fa-blogger-b"></i>
+              </span>
+              <span>Bulma</span>
+            </a>
+
+            <a class="button is-danger is-outlined" href="https://graphql.org/" title="Hecho con">
+              <span class="icon">
+                <i class="fab fa-connectdevelop"></i>
+              </span>
+              <span>GrahpQL</span>
+            </a> 
+
+            <a class="button is-success is-outlined" href="https://nodejs.org/" title="Hecho con">
+              <span class="icon">
+                <i class="fab fa-node-js"></i>
+              </span>
+              <span>Node</span>
+            </a> 
+
+            <a class="button is-info is-outlined" href="https://www.smn.gob.ar/" title="Gracias y Hecho con">
+              <span class="icon">
+                <i class="fas fa-sun"></i>
+              </span>
+              <span>SMN API</span>
+            </a>
+            
+            <a class="button is-info is-outlined" href="https://www.facebook.com/groups/571508276552938/" title="Para">
+              <span class="icon">
+                <i class="fab fa-facebook"></i>
+              </span>
+              <span>Podemos Aprender</span>
+            </a> 
+            
+          </div>
+        </div>
+      </div>
+    </main>
+  </body>
+</html>

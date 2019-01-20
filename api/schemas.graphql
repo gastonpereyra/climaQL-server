@@ -1,0 +1,110 @@
+# Modelo de los datos a usar
+
+""" Clima Actual """
+type Weather {
+    """ Temperatura en °C """
+    temp : Float
+    """ Temperatura en Texto """
+    tempDesc: String
+    """ Sensación Termica en °C """
+    st : Float
+    """ Humedad en %"""
+    humidity: Int
+    """ Presión Atmosferica en hPa"""
+    pressure: Float
+    """ Visibilidad en km """
+    visibility: Int
+    """ Velocidad del Viente en km/h"""
+    wind_speed: Int
+    """ Dirección del Viento """
+    wind_deg: String # ["Este","Oeste","Sur","Norte", etc..]
+    """ ID del tipo de Clima """
+    id: Int # (ID del icono del clima)
+    """ Descripción Detallada """
+    description: String # Solo Español
+}
+
+""" Pronostico de la Mañana """ 
+type Morning {
+    weather_id: Int
+    description: String
+}
+
+""" Pronostico de la Tarde/Noche """ 
+type Afternoon {
+    weather_id: Int
+    description: String
+}
+
+""" Pronostico Detalle """ 
+type Forecasts {
+    """ Fecha """ 
+    date: String # (YYYY-mm-DD)
+    """ Temperatura Minima / De la manaña, en °C """ 
+    temp_min: Float
+    """ Tempertura Maxima / De la Tarde, °C) """ 
+    temp_max: Float
+    temp_min_sub: Float
+    temp_noc: Float # Noche?
+    """ Radiacion solar, en UV """
+    radiation: String 
+    morning: Morning
+    afternoon: Afternoon
+}
+
+
+""" Pronostico """
+type Forecast {
+    _id: ID
+    timestamp: String
+    date_time: String # (YYYY-mm-DD HH:MM)
+    location_id: Int
+    forecast: [Forecasts]
+}
+
+
+""" SubEstación Regional Clima Actual """
+type WeatherReport {
+    _id : ID
+    dist : Float
+    """ ID de la Estación """
+    lid : Int
+    """ ID de la Estación """
+    fid : Int
+    int_number : Int
+    """ Nombre del Lugar """
+    name : String
+    """ Provincia """
+    province: String
+    """ Latitud """
+    lat: Float
+    """ Longitud """
+    lon: Float
+    zoom: Int
+    """ Ultima actualización """
+    updated: Int # UNIX
+    """ Clima Actual """
+    weather: Weather
+    # Pronostico Extendido
+    # forecast: Forecast
+}
+
+# Queries
+
+type Query {
+  
+  """ Conseguir Clima Actual de la Subestación por ID"""
+  getWeatherById(id: Int!): WeatherReport
+  
+  """ Conseguir Clima Actual de la Subestación mas Cercana por Coord"""
+  getWeatherByCoords(lat: Float!, lon: Float!): WeatherReport
+  
+  """ Conseguir todos los datos del Clima Actual, de todas las Subestaciones"""
+  getWeathers: [WeatherReport]
+  
+  """ Conseguir el Pronostico de una Subestación """
+  getForecast(id: Int!): Forecast
+  
+  """ Conseguir el Pronostico de todas las Subestaciones """
+  getForecasts: [Forecast]
+}
