@@ -57,77 +57,83 @@ const desc = document.getElementById("desc");
 const city = document.getElementById("city");
 const province = document.getElementById("province");
 
+/**
+* Busca en la API los datos basicos del clima segun las coordenadas
+* @params {Number} lat Latitud
+* @params {Number} lon Longitud
+*/
+function getWeather(lat,lon) {
+  // Si es de Dia o Noche
+  const isDay = (new Date().getHours() > 7 && new Date().getHours() < 19);
+  
+  fetch(API, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    // Le paso el Query en JSON
+    body: JSON.stringify({ 
+      query: `{ 
+          estacion: getWeatherByCoords(lat: ${lat}, lon: ${lon}) {
+            name
+            province
+            weather { 
+              temp 
+              st 
+              description 
+              id 
+            } 
+          } 
+        }` 
+      }),
+    })
+    .then(res => res.json()) // Recivo respuesta positiva, convierto a JSON
+    .then(res => res.data.estacion) // Saco la data con el Alias
+    .then(estacion => ({
+      // Formateo la info par usarla
+      "name": estacion.name,
+      "province": estacion.province,
+      "temp": estacion.weather.temp,
+      "st": estacion.weather.st,
+      "weather_id": estacion.weather.id,
+      "description": estacion.weather.description
+    }))
+    .then( clima => {
+      // Actualizó los datos con la info de la API
+      city.innerHTML= clima.name;
+      province.innerHTML= clima.province;
+      temp.innerHTML= clima.temp+"°C";
+      st.innerHTML= clima.st ? clima.st+"°C" : " - ";
+      climaIcon.src= isDay ? image_day[clima.weather_id] : image_night[clima.weather_id];
+      desc.innerHTML= clima.description;
+      // Cambio colores segun hora y temp
+      main.classList.add(isDay ? "is-light" : "is-dark");
+      const tempColor = clima.temp > 30 ? "is-danger" : 
+                  clima.temp > 25 ? "is-warning" : 
+                  clima.temp > 15 ? "is-success" : 
+                  "is-info"; 
+      const stColor = !clima.st ? "is-white" :
+                  clima.st > 30 ? "is-danger" : 
+                  clima.st > 25 ? "is-warning" : 
+                  clima.st > 15 ? "is-success" : 
+                  "is-info"; 
+      temp.classList.add(tempColor);
+      st.classList.add(stColor);
+      desc.classList.add("is-primary");
+    })
+    .catch(error => {
+      desc.innerHTML= "ERROR - "+error;
+    });
+}
+
 // Obtener la Geo Posición
 function getLocation() {
   if (navigator.geolocation) {
-    navigator.geolocation.getCurrentPosition(showPosition);
+    navigator.geolocation.getCurrentPosition(
+      (position)=> getWeather(position.coords.latitude,position.coords.longitude), // Si esta tiene permiso busca por Coordenadas
+      () => getWeather(-34.62170792,-58.42575836) // Si no tiene permiso trae una por Default
+    );
   } else { 
     desc.innerHTML= "ERROR - Su Navegador no soporta la Función requirada";
   }
-}
-    
-function showPosition(position) {
-    const lat = position.coords.latitude;
-    const lon = position.coords.longitude;
-    const isDay = (new Date().getHours() > 7 && new Date().getHours() < 19);
-    // Hago un llamado a la API
-    fetch(API, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      // Le paso el Query en JSON
-      body: JSON.stringify({ 
-        query: `{ 
-            estacion: getWeatherByCoords(lat: ${lat}, lon: ${lon}) {
-              name
-              province
-              weather { 
-                temp 
-                st 
-                description 
-                id 
-              } 
-            } 
-          }` 
-        }),
-      })
-      .then(res => res.json()) // Recivo respuesta positiva, convierto a JSON
-      .then(res => res.data.estacion) // Saco la data con el Alias
-      .then(estacion => ({
-        // Formateo la info par usarla
-        "name": estacion.name,
-        "province": estacion.province,
-        "temp": estacion.weather.temp,
-        "st": estacion.weather.st,
-        "weather_id": estacion.weather.id,
-        "description": estacion.weather.description
-      }))
-      .then( clima => {
-        // Actualizó los datos con la info de la API
-        city.innerHTML= clima.name;
-        province.innerHTML= clima.province;
-        temp.innerHTML= clima.temp+"°C";
-        st.innerHTML= clima.st ? clima.st+"°C" : " - ";
-        climaIcon.src= isDay ? image_day[clima.weather_id] : image_night[clima.weather_id];
-        desc.innerHTML= clima.description;
-        // Cambio colores segun hora y temp
-        main.classList.add(isDay ? "is-light" : "is-dark");
-        const tempColor = clima.temp > 30 ? "is-danger" : 
-                    clima.temp > 25 ? "is-warning" : 
-                    clima.temp > 15 ? "is-success" : 
-                    "is-info"; 
-        const stColor = !clima.st ? "is-white" :
-                    clima.st > 30 ? "is-danger" : 
-                    clima.st > 25 ? "is-warning" : 
-                    clima.st > 15 ? "is-success" : 
-                    "is-info"; 
-        temp.classList.add(tempColor);
-        st.classList.add(stColor);
-        desc.classList.add("is-primary");
-      })
-      .catch(error => {
-        desc.innerHTML= "ERROR - "+error;
-      });
-    
 }
 
 // Para el NavBar - Sacado del sitio de Bulma
