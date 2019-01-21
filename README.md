@@ -1,14 +1,20 @@
 # CLIMA QL
 
-<img src="https://cdn.glitch.com/14524ae1-2b69-4f47-8612-cf3ccbf9b37f%2FClimaQL_01.png?1548036106210" width="900">
+<img src="https://cdn.glitch.com/14524ae1-2b69-4f47-8612-cf3ccbf9b37f%2FClimaQL_00.png?1548113833610" width="900">
 
 Convierte la RESTful API del SMN (Servicio Meteorológico Nacional Argentino) en datos GraphQL.
 
 ## Pagina Principal
 
-<https://climaql-server.glitch.me/>
+<img src="https://cdn.glitch.com/14524ae1-2b69-4f47-8612-cf3ccbf9b37f%2FclimaQL_05.png?1548113896706" width="900">
+
+En Glitch: <https://climaql-server.glitch.me/>
+
+En Github (Recomendada para usuarios en Chrome) : <https://gastonpereyra.github.io/climaQL-server/>
 
 Al entrar muestra el clima segun la estación meteorologica mas cercano a tu ubicación.
+
+<img src="https://cdn.glitch.com/14524ae1-2b69-4f47-8612-cf3ccbf9b37f%2FClimaQL_01.png?1548036106210" width="900">
 
 En la parte superior se puede ingresar al Playground para probar los Query.
 
@@ -22,7 +28,7 @@ En la parte superior se puede ingresar al Playground para probar los Query.
 
 ## Versión
 
-Actual de Server: `0.4.1`.
+Actual de Server: `0.4.2`.
 
 Actual de Client: `0.5.0`.
 
@@ -33,8 +39,9 @@ Anteriores:
 * `0.2.0` - Agregar Query para mostrar Pronosticos de 1 subestación
 * `0.2.1` - Corregir carga de datos de Pronosticos
 * `0.3.0` - Agregar Queries de Pronostico de todas las subestaciones y clima Actual de solo 1.
-* `0.4.0` - Elimina getLocationId (no mostraba bien los ID). Reemplazo de getWeather por getWeatherByID y getWeatherbyCoords.
+* `0.4.0` - Elimina `getLocationId` (no mostraba bien los ID). Reemplazo de getWeather por `getWeatherByID` y `getWeatherbyCoords`.
 * `0.4.1` - Mejora en la busqueda por Coordenadas
+* `0.4.2` - `getWeathers` y `getWeathersBy` ahora también pueden mostrar pronosticos (solución al problema de `0.1.1`)
 
 ### Client
 
@@ -56,3 +63,5 @@ Anteriores:
 * SMN API
 
 ## Hecho por Gastón Pereyra
+* Github: <https://github.com/gastonpereyra/climaQL-server>
+* Docs de la API del SMN: <https://github.com/gastonpereyra/smnQL>
