@@ -86,7 +86,7 @@ type WeatherReport {
     """ Clima Actual """
     weather: Weather
     # Pronostico Extendido
-    # forecast: Forecast
+    forecast: Forecast
 }
 
 # Queries
