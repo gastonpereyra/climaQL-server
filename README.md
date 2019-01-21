@@ -1,5 +1,7 @@
 # CLIMA QL
 
+<img src="https://cdn.glitch.com/14524ae1-2b69-4f47-8612-cf3ccbf9b37f%2FClimaQL_01.png?1548036106210" width="900">
+
 Convierte la RESTful API del SMN (Servicio Meteorológico Nacional Argentino) en datos GraphQL.
 
 ## Pagina Principal
@@ -22,7 +24,7 @@ En la parte superior se puede ingresar al Playground para probar los Query.
 
 Actual de Server: `0.4.1`.
 
-Actual de Client: `0.4.0`.
+Actual de Client: `0.5.0`.
 
 ### Server
 Anteriores: 
@@ -42,6 +44,7 @@ Anteriores:
 * `0.3.0` - Muestra Clima segun Geo-Posición al Ingresar. 
 * `0.3.1` - Agregar cambiar Imagen del Clima segun el tipo.
 * `0.4.0` - Agregar Barra Navegadora y Footer con Links
+* `0.5.0` - Agregar función de cambio de colores por dia/noche y segun temperatura
 
 ## Hecho con
 
