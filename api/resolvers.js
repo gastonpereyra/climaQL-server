@@ -106,5 +106,8 @@ export const resolvers = {
           return [];
         });
     }
+  },
+  Forecast: {
+    forecast: ({forecast}) => Object.keys(forecast).map( key => forecast[key])
   }
 }
