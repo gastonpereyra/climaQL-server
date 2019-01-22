@@ -10,31 +10,26 @@ const URL_SMNAPI = 'https://ws.smn.gob.ar/'; // Dirección de Base de la REST-AP
 *  @return {Object}  Objeto encontrado, default: el primero de la Colección
 */
 const getClosestStation = (lat, lon, stations) => {
-  
   let closest = null; // index de la estación mas cercana
-  let closest_lat = null; // referencia, latitud temporalmente mas cercana
-  let closest_lon = null; // referencia, longitud temporalmente mas cercana
+  let closest_ref= null;// referencia de la diferencia entre la lat y lon a buscar y la de la estación
 
   // Buscamos dentro de la Colección
   const selectStation = stations.find( (station, i) => {          
     if (closest === null) { // Si es el primer valor inicializamos
       closest = i;
-      closest_lat = Math.abs(parseFloat(lat)-parseFloat(station.lat));
-      closest_lon = Math.abs(parseFloat(lon)-parseFloat(station.lon));
+      closest_ref= Math.abs(parseFloat(lat)-parseFloat(station.lat)) + Math.abs(parseFloat(lon)-parseFloat(station.lon));
     }
     else {
         // Valores Relativos de la posicion actual y la estación
-        const rel_lat = Math.abs(parseFloat(lat)-parseFloat(station.lat));
-        const rel_lon = Math.abs(parseFloat(lon)-parseFloat(station.lon));
+        const new_ref = Math.abs(parseFloat(lat)-parseFloat(station.lat)) + Math.abs(parseFloat(lon)-parseFloat(station.lon));
         // Comparamos los valores, mas cerca de 0 simultaneamente mas cerca
-        if ( (rel_lat < closest_lat) && (rel_lon < closest_lon) ) { 
+        if (new_ref<closest_ref) {
           // Cambiamos los valores de referencia
-          closest_lat = rel_lat;
-          closest_lon = rel_lon;
+          closest_ref = new_ref;
           closest = i;
       } 
     }
-    return (closest_lat === 0 && closest_lon === 0) // equivalente a (station.lat === lat && station.lon === lon)
+    return (closest_ref === 0) // equivalente a (station.lat === lat && station.lon === lon)
   })
   // Si encontró la estación la devolvemos sino la mas cercana
   return selectStation ? selectStation : stations[closest];
