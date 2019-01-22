@@ -28,7 +28,7 @@ En la parte superior se puede ingresar al Playground para probar los Query.
 
 ## Versión
 
-Actual de Server: `0.4.2`.
+Actual de Server: `0.4.3`.
 
 Actual de Client: `0.5.0`.
 
@@ -42,6 +42,7 @@ Anteriores:
 * `0.4.0` - Elimina `getLocationId` (no mostraba bien los ID). Reemplazo de getWeather por `getWeatherByID` y `getWeatherbyCoords`.
 * `0.4.1` - Mejora en la busqueda por Coordenadas
 * `0.4.2` - `getWeathers` y `getWeathersBy` ahora también pueden mostrar pronosticos (solución al problema de `0.1.1`)
+* `0.4.3` - Corregir el calculo por Coordenadas
 
 ### Client
 
