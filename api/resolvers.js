@@ -30,7 +30,7 @@ const getClosestStation = (lat, lon, stations) => {
         if ( (rel_lat < closest_lat) && (rel_lon < closest_lon) ) { 
           // Cambiamos los valores de referencia
           closest_lat = rel_lat;
-          closest_lon = rel_lat;
+          closest_lon = rel_lon;
           closest = i;
       } 
     }
