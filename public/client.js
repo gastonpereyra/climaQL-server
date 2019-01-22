@@ -156,7 +156,9 @@ if ($navbarBurgers.length > 0) {
 getLocation();
 
 // Para acomodar la imagen en mobiles
-if (window.innerWidth < 600) {
-  document.getElementById('icon_container').classList.toggle('is-128x128');
-  document.getElementById('icon_container').classList.toggle('is-64x64');
-}
+window.addEventListener('resize', () => { 
+  if (window.innerWidth < 600) {
+    document.getElementById('icon_container').classList.toggle('is-128x128');
+    document.getElementById('icon_container').classList.toggle('is-64x64');
+  }
+});
